@@ -15,6 +15,6 @@ async def on_ready(): print("Ya prendí")
 async def on_member_join(member): print(f'Entro: {member}')
 
 @client.event
-async def on_voice_state_update(member, before, after): await voice_state_update(member, before, after)
+async def on_voice_state_update(member, before, after): await voice_state_update(member, before, after, client)
 
 client.run(TOKEN)
