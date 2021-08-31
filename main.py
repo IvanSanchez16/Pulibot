@@ -3,6 +3,7 @@ from discord.ext import commands, tasks
 from decouple import config
 from Listeners.voice_state import voice_state_update
 from Listeners.member_join import member_join
+from Listeners.messages import message_sent
 
 TOKEN = config('TOKEN')
 
@@ -12,7 +13,7 @@ client = commands.Bot(command_prefix='-', intents=intents)
 
 
 @client.event
-async def on_ready(): print("Ya prendí")
+async def on_ready(): print('Yatoy')
 
 
 @client.event
@@ -21,5 +22,8 @@ async def on_member_join(member): await member_join(member, client)
 
 @client.event
 async def on_voice_state_update(member, before, after): await voice_state_update(member, before, after, client)
+
+@client.event
+async def on_message(message): await message_sent(message, client)
 
 client.run(TOKEN)
