@@ -12,14 +12,17 @@ async def voice_state_update(member, before, after, client):
         members = channel.members
         if not await validate_loser(channel.id):
             return
+
         bots = [member for member in members if member.bot]
+        # Ya queda alguien solo
         if len(members) - len(bots) == 1:
             loser = [member for member in members if not member.bot]
             loser = loser[0]
-            await send_message(channel='pruebas', message=await name_changer(loser), client=client)
+            await send_message(channel='general', message=await name_changer(loser), client=client)
 
         # Borrar channel_data
         if len(members) == 0:
+            time.sleep(1)
             channel = [c for c in channels_data if c['id'] == channel.id][0]
             channels_data.remove(channel)
 
@@ -30,7 +33,6 @@ async def voice_state_update(member, before, after, client):
         if len(channel.members) > 1 and not is_registered:
             start_time = time.time() - 1630000000
             channels_data.append({'id': channel.id, 'start_time': start_time})
-            return
 
 
 async def validate_loser(channel):
@@ -43,7 +45,6 @@ async def validate_loser(channel):
     if now - channel_data['start_time'] >= 10800:  # 3 hrs
         time_object = time.gmtime()
         now = int(time.strftime("%H", time_object))
-        print(now)
         return 3 <= now <= 15  # 9 pm - 9 am en GMT-6
     return False
 
