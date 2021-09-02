@@ -40,7 +40,6 @@ async def voice_state_update(member, before, after, client):
 
 async def validate_loser(channel):
     channel_data = [c for c in channels_data if c['id'] == channel]
-    channel_data = channel_data
     if len(channel_data) == 0:
         return False
     channel_data = channel_data[0]
