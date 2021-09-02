@@ -23,7 +23,9 @@ async def on_member_join(member): await member_join(member, client)
 @client.event
 async def on_voice_state_update(member, before, after): await voice_state_update(member, before, after, client)
 
+
 @client.event
 async def on_message(message): await message_sent(message, client)
+
 
 client.run(TOKEN)

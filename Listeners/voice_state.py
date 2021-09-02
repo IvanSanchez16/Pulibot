@@ -19,11 +19,14 @@ async def voice_state_update(member, before, after, client):
             loser = [member for member in members if not member.bot]
             loser = loser[0]
             await send_message(channel='general', message=await name_changer(loser), client=client)
+            await send_message(channel='pruebas', message=loser.id, client=client)
 
         # Borrar channel_data
         if len(members) == 0:
-            time.sleep(1)
-            channel = [c for c in channels_data if c['id'] == channel.id][0]
+            channel = [c for c in channels_data if c['id'] == channel.id]
+            if len(channel) == 0:
+                return
+            channel = channel[0]
             channels_data.remove(channel)
 
     # Escenario que alguien entra a un canal
@@ -37,7 +40,6 @@ async def voice_state_update(member, before, after, client):
 
 async def validate_loser(channel):
     channel_data = [c for c in channels_data if c['id'] == channel]
-    channel_data = channel_data
     if len(channel_data) == 0:
         return False
     channel_data = channel_data[0]

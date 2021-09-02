@@ -53,4 +53,4 @@ async def commands_channel(message, client):
 
 async def is_command(message):
     first_char = message[0]
-    return first_char == '-' or first_char == '!' or first_char == '/'
+    return first_char == '-' or first_char == '!' or first_char == '/' or first_char == '!'
