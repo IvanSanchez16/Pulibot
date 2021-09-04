@@ -1,6 +1,3 @@
-import string
-
-import discord
 from Actions.Message import send_message
 
 
@@ -52,5 +49,8 @@ async def commands_channel(message, client):
 
 
 async def is_command(message):
+    print(message)
+    if len(message) == 0:
+        return True
     first_char = message[0]
     return first_char == '-' or first_char == '!' or first_char == '/' or first_char == '!'
