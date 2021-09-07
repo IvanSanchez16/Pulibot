@@ -38,6 +38,7 @@ async def voice_state_update(member, before, after, client):
             channels_data.append({'id': channel.id, 'start_time': start_time})
 
 
+# Validar si fue momento de un 'pto el ultimo'
 async def validate_loser(channel):
     channel_data = [c for c in channels_data if c['id'] == channel]
     if len(channel_data) == 0:

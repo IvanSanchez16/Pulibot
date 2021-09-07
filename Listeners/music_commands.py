@@ -1,6 +1,6 @@
 from Actions.Message import send_message
 from Models.google_api import get_URL
-from Actions.Music import add_queue
+from Actions.Music import add_queue, next_song
 
 
 async def play_song(ctx, params, client):
@@ -32,3 +32,8 @@ async def play_song(ctx, params, client):
     url = get_URL(title)
 
     await add_queue(voice_client, url, client)
+
+
+async def skip_song(ctx, client):
+    voice_client = ctx.message.guild.voice_client
+    voice_client.stop()

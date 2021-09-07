@@ -1,4 +1,3 @@
-import asyncio
 import discord
 import youtube_dl
 
@@ -32,12 +31,11 @@ class YTDLSource(discord.PCMVolumeTransformer):
         self.title = data.get('title')
         self.url = data.get('url')
 
+    # Obtener pista e info de video con la url
     @classmethod
     async def from_url(cls, url):
-        ydl_opts = {'format': 'bestaudio'}
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(url, download=False)
-            URL = info['formats'][0]['url']
+        info = ytdl.extract_info(url, download=False)
+        URL = info['formats'][0]['url']
         return {
             'player': discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS),
             'title': info['title'],
