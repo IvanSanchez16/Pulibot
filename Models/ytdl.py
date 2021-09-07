@@ -41,5 +41,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return {
             'player': discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS),
             'title': info['title'],
-            'duration': info['duration']
+            'duration': info['duration'],
+            'image': info['thumbnail']
         }
