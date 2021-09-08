@@ -1,6 +1,6 @@
 from Actions.Message import send_message
 from Models.google_api import get_URL
-from Actions.Music import add_queue, next_song
+from Actions.Music import add_queue, clear_queue, shuffle_queue
 
 
 async def play_song(ctx, params, client):
@@ -32,8 +32,27 @@ async def play_song(ctx, params, client):
     url = get_URL(title)
 
     await add_queue(voice_client, url, client)
+    await ctx.message.add_reaction('▶')
 
 
-async def skip_song(ctx, client):
+async def skip_song(ctx):
     voice_client = ctx.message.guild.voice_client
     voice_client.stop()
+    await ctx.message.add_reaction('⏭')
+
+
+async def clear_q(ctx, client):
+    await clear_queue(client, True)
+    await ctx.message.add_reaction('🗑️')
+
+
+async def shuffle_q(ctx, client):
+    await shuffle_queue(client)
+    await ctx.message.add_reaction('🔀')
+
+
+async def leave_channel(ctx, client):
+    voice_client = ctx.message.guild.voice_client
+    await voice_client.disconnect()
+    await clear_queue(client, False)
+    await ctx.message.add_reaction('👋')

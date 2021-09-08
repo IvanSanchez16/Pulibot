@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 from decouple import config
-from Listeners.music_commands import play_song, skip_song
+from Listeners.music_commands import play_song, skip_song, clear_q, shuffle_q, leave_channel
 from Listeners.voice_state import voice_state_update
 from Listeners.member_join import member_join
 from Listeners.messages import message_sent
@@ -38,19 +38,19 @@ async def play(ctx, *params): await play_song(ctx, params, client)
 
 
 @client.command(name='skip', help='Saltar a la siguiente canción')
-async def skip(ctx): await skip_song(ctx, client)
+async def skip(ctx): await skip_song(ctx)
 
 
 @client.command(name='clear', help='Limpia la cola de reproducción')
-async def clear(ctx): pass
+async def clear(ctx): await clear_q(ctx, client)
 
 
 @client.command(name='leave', help='Desconectar al bot')
-async def leave(ctx): pass
+async def leave(ctx): await leave_channel(ctx, client)
 
 
 @client.command(name='shuffle', help='Mezcla la cola de reproducción')
-async def shuffle(ctx): pass
+async def shuffle(ctx): await shuffle_q(ctx, client)
 
 
 client.run(TOKEN)
