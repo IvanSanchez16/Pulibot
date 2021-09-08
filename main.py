@@ -33,24 +33,40 @@ async def on_message(message):
                                             # el evento de on_message
 
 
+async def is_commands(ctx):
+    # Si no viene del canal de comandos se ignora el comando
+    channel = ctx.channel
+    return channel.name == 'comandos'
+
+
 @client.command(name='p', help='Reproducir una canción')
-async def play(ctx, *params): await play_song(ctx, params, client)
+async def play(ctx, *params):
+    if await is_commands(ctx):
+        await play_song(ctx, params, client)
 
 
 @client.command(name='skip', help='Saltar a la siguiente canción')
-async def skip(ctx): await skip_song(ctx)
+async def skip(ctx):
+    if await is_commands(ctx):
+        await skip_song(ctx)
 
 
 @client.command(name='clear', help='Limpia la cola de reproducción')
-async def clear(ctx): await clear_q(ctx, client)
+async def clear(ctx):
+    if await is_commands(ctx):
+        await clear_q(ctx, client)
 
 
 @client.command(name='leave', help='Desconectar al bot')
-async def leave(ctx): await leave_channel(ctx, client)
+async def leave(ctx):
+    if await is_commands(ctx):
+        await leave_channel(ctx, client)
 
 
 @client.command(name='shuffle', help='Mezcla la cola de reproducción')
-async def shuffle(ctx): await shuffle_q(ctx, client)
+async def shuffle(ctx):
+    if await is_commands(ctx):
+        await shuffle_q(ctx, client)
 
 
 client.run(TOKEN)

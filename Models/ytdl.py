@@ -22,23 +22,15 @@ FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconne
 ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 
-class YTDLSource(discord.PCMVolumeTransformer):
-    def __init__(self, source, *, data, volume=0.5):
-        super().__init__(source, volume)
-
-        self.data = data
-
-        self.title = data.get('title')
-        self.url = data.get('url')
-
-    # Obtener pista e info de video con la url
-    @classmethod
-    async def from_url(cls, url):
-        info = ytdl.extract_info(url, download=False)
-        URL = info['formats'][0]['url']
-        return {
-            'player': discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS),
-            'title': info['title'],
-            'duration': info['duration'],
-            'image': info['thumbnail']
-        }
+# Obtiene el AudioSource desde una url de Youtube
+async def from_url(url):
+    info = ytdl.extract_info(url, download=False)
+    URL = info['formats'][0]['url']
+    player = discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS)
+    player = discord.PCMVolumeTransformer(player, 0.5)
+    return {
+        'player': player,
+        'title': info['title'],
+        'duration': info['duration'],
+        'image': info['thumbnail']
+    }

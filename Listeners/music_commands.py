@@ -1,13 +1,12 @@
 from Actions.Message import send_message
 from Models.google_api import get_URL
 from Actions.Music import add_queue, clear_queue, shuffle_queue
+import re
+
+regex_yt_url = r'\b(?:https://youtube.com/watch?v=)[A-Za-z0-9-_&=]+'
 
 
 async def play_song(ctx, params, client):
-    channel = ctx.channel
-    if channel.name != 'comandos':
-        return
-
     channel = ctx.message.author.voice
     if not channel:
         await send_message(channel='comandos', message='No estás conectado a ningún canal de voz',
@@ -26,10 +25,14 @@ async def play_song(ctx, params, client):
     server = ctx.message.guild
     voice_client = server.voice_client
 
+    # Puede proporcionar el link de yt directamente o poner texto el cual sería como ponerlo en el buscador
     title = ''
-    for p in params:
-        title = title + ' ' + p
-    url = get_URL(title)
+    if re.match(regex_yt_url, params[0]):
+        url = params[0]
+    else:
+        for p in params:
+            title = title + ' ' + p
+        url = get_URL(title)  # Obtiene la url del primer video de yt encontrado con lo escrito
 
     await add_queue(voice_client, url, client)
     await ctx.message.add_reaction('▶')

@@ -6,10 +6,19 @@ channels_data = []
 
 
 async def voice_state_update(member, before, after, client):
-    # Escenario que alguien sale de un canal
-    if not member.bot and not after.channel:
+    channel = members = None
+    if before.channel:
         channel = before.channel
         members = channel.members
+
+    # Sacar al bot cuando quede solo
+    if len(client.voice_clients):
+        voice_client = client.voice_clients[0]
+        if voice_client.channel == channel and len(members) == 1:
+            await voice_client.disconnect()
+
+    # Escenario que alguien sale de un canal
+    if not member.bot and not after.channel:
         if not await validate_loser(channel.id):
             return
 
