@@ -50,15 +50,10 @@ async def commands_channel(message, client):
         await send_message(channel='comandos',
                            message='Aquí existe un orden. No envies mensajes aquí, solamente comandos',
                            client=client, duration_on_secs=15)
-    if message.content == '-prueba':
-        await send_message(channel='comandos', message='!p la noche de anoche',
-                           client=client)
-        await send_message(channel='comandos', message='-p la noche de anoche',
-                           client=client)
 
 
 async def is_command(message):
     if len(message) == 0:
         return True
     first_char = message[0]
-    return first_char == '-' or first_char == '!' or first_char == '/' or first_char == '!'
+    return first_char == '-' or first_char == '!' or first_char == '$' or first_char == '!'

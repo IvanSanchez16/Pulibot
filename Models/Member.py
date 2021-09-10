@@ -1,6 +1,7 @@
 from Models.DBConnection import members
 
 
+# Ver si alguien esta registrado su nombre modificado
 async def find_member(member):
     result = members.find_one({"user": str(member)})
     return result
@@ -11,6 +12,7 @@ async def insert_member(member, loser_name):
     members.insert_one(document)
 
 
+# Función que devuelve el 'loser_name' de alguien, lo busca en la bdd si no lo genera
 async def name_changer(member):
     result = await find_member(member.id)
     if result:
