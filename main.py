@@ -10,7 +10,7 @@ TOKEN = config('TOKEN')
 
 intents = discord.Intents.default()
 intents.members = True
-client = commands.Bot(command_prefix='-', intents=intents)
+client = commands.Bot(command_prefix='$', intents=intents)
 
 
 # Se definen todos los eventos, comandos, etc. Y se envía el objeto client para poder manipularlo
