@@ -10,6 +10,7 @@ pynacl = "*"
 pymongo = {extras = ["srv"], version = "*"}
 youtube-dl = "*"
 google-api-python-client = "*"
+spotipy = "*"
 
 [dev-packages]
 
