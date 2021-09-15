@@ -1,4 +1,6 @@
+import re
 from Actions.Message import send_message
+regexGif = r'\b(?:https://tenor.com/view/)[A-Za-z0-9-]+'
 
 
 async def message_sent(message, client):
@@ -30,7 +32,7 @@ async def general_channel(message, client):
 
     # Evitar enlaces
     content = message.content
-    if content.startswith('https://') or content.startswith('http://'):
+    if (content.startswith('https://') or content.startswith('http://')) and not re.match(regexGif, content):
         await message.delete()
         await send_message(channel='general', message='Aquí existe un orden. No envies enlaces aquí',
                            client=client, duration_on_secs=30)
