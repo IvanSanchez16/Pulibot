@@ -1,5 +1,4 @@
 from Actions.Message import send_message, send_embed
-from Models.google_api import get_URL
 from Models.spotify import get_playlist_tracks,get_album_tracks
 from Actions.Music import add_queue, clear_queue, shuffle_queue, add_queue_pl, see_queue, set_three_songs_data, delete_message
 import re
@@ -44,7 +43,7 @@ async def play_song(ctx, params, client):
 
 async def play_spotify_pl(client, playlist_id):
     playlist = get_playlist_tracks(playlist_id)
-    tracks = playlist['tracks']['items']
+    tracks = playlist['tracks']
     song = tracks[0]['track']
     artistas = ''
     for a in song['artists']:
